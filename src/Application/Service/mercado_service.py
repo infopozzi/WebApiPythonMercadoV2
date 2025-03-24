@@ -17,7 +17,7 @@ class MercadoService:
     @staticmethod
     def salvar(nome, cnpj, email, celular, senha, status):
         new_mercado = MercadoDomain(nome, cnpj, email, celular, senha, status)
-        mercado = Mercado(nome=new_mercado.nome, cnppj=new_mercado.cnpj, email=new_mercado.email, celular = new_mercado.celular, senha = new_mercado.senha, status = new_mercado.status)        
+        mercado = Mercado(nome=new_mercado.nome, cnpj=new_mercado.cnpj, email=new_mercado.email, celular = new_mercado.celular, senha = new_mercado.senha, status = new_mercado.status)        
         db.session.add(mercado)
         db.session.commit()
         return mercado

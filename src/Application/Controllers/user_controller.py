@@ -18,5 +18,5 @@ class UserController:
             "usuarios": user.to_dict()
         }), 200)
 
-    def listar_user():
+    def listar_usuarios():
         return jsonify([usuario.to_dict() for usuario in UserService.listar()], 200)

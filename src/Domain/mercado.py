@@ -1,6 +1,5 @@
 class MercadoDomain:
-    def __init__(self, id, nome, cnpj, email,celular, senha, status):
-        self.id = id
+    def __init__(self, nome, cnpj, email,celular, senha, status):
         self.nome = nome
         self.cnpj = cnpj
         self.email = email
@@ -10,7 +9,6 @@ class MercadoDomain:
         
     def to_dict(self):
         return {
-            "id": self.id,
             "nome": self.nome,
             "cnpj": self.cnpj,
             "email": self.email,
