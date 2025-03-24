@@ -10,3 +10,8 @@ class UserService:
         db.session.add(user)
         db.session.commit()
         return user
+
+    @staticmethod
+    def listar():
+        usuarios = User.query.all()
+        return usuarios

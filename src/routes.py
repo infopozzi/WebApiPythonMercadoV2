@@ -12,5 +12,9 @@ def init_routes(app):
     def register_user():
         return UserController.register_user()
     
+    @app.route('/listar', methods=['GET'])
+    def listar_user():
+        return UserController.listar_user()
+    
     
 

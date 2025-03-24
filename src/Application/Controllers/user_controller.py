@@ -17,3 +17,6 @@ class UserController:
             "mensagem": "User salvo com sucesso",
             "usuarios": user.to_dict()
         }), 200)
+
+    def listar_user():
+        return jsonify([usuario.to_dict() for usuario in UserService.listar()], 200)
