@@ -32,3 +32,7 @@ def init_routes(app):
     @app.route('/mercado/ativar', methods=['POST'])
     def ativar_mercado():
         return MercadoController.ativar_mercado()
+    
+    @app.route('/mercado/login', methods=['POST'])
+    def login_mercado():
+        return MercadoController.login_mercado()

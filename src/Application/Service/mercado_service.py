@@ -56,6 +56,14 @@ class MercadoService:
         mercado.status = 1
         db.session.commit()
         return mercado
+    
+    @staticmethod
+    def login(email, senha):
+        new_mercado = MercadoDomain('', '', email, '', senha, 1)
+        mercado = Mercado.query.filter(Mercado.status == new_mercado.status, Mercado.email == new_mercado.email, Mercado.senha == new_mercado.gerarSenhaCriptografada()).first()
+        if not mercado:
+            raise MercadoNaoEncontrado(f"Email ou senha inválido.")        
+        return mercado
 
 class MercadoNaoEncontrado(Exception):
     pass

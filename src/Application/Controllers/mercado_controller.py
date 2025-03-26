@@ -1,5 +1,7 @@
 from flask import request, jsonify, make_response
-from src.Application.Service.mercado_service import MercadoService
+from src.Application.Service.mercado_service import MercadoService, MercadoNaoEncontrado
+from datetime import datetime, timedelta
+import jwt
 
 class MercadoController:
     @staticmethod
@@ -45,6 +47,29 @@ class MercadoController:
                 "mensagem": "Mercado ativado com sucesso",
                 "mercado": mercado.to_dict()
             }), 200)
+    
+        except MercadoNaoEncontrado as e:
+            return jsonify({ "message": str(e) }), 404
+
+    @staticmethod
+    def login_mercado():
+        try:
+            SECRET_KEY = "senhaToken"
+
+            data = request.get_json()
+            email = data.get('email')
+            senha = data.get('senha')
+
+            mercado = MercadoService.login(email, senha)
+
+            # Gerar o token com expiração
+            token = jwt.encode(
+                {"user": mercado.email, "exp": datetime.utcnow() + timedelta(minutes=30)},
+                SECRET_KEY,
+                algorithm="HS256"
+            )
+            
+            return make_response(jsonify(token=token), 200)
     
         except MercadoNaoEncontrado as e:
             return jsonify({ "message": str(e) }), 404
