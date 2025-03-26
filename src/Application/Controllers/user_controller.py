@@ -3,7 +3,7 @@ from src.Application.Service.user_service import UserService
 
 class UserController:
     @staticmethod
-    def register_user():
+    def cadastrar_usuario():
         data = request.get_json()
         name = data.get('name')
         email = data.get('email')
@@ -20,3 +20,5 @@ class UserController:
 
     def listar_usuarios():
         return jsonify([usuario.to_dict() for usuario in UserService.listar()], 200)
+    
+

@@ -15,3 +15,6 @@ class UserService:
     def listar():
         usuarios = User.query.all()
         return usuarios
+    
+class UsuarioNaoEncontrado(Exception):
+    pass

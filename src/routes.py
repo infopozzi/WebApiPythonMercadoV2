@@ -11,13 +11,13 @@ def init_routes(app):
     
     
     
-    @app.route('/user', methods=['POST'])
-    def register_user():
-        return UserController.register_user()
+    @app.route('/usuario/cadastrar', methods=['POST'])
+    def cadastrar_usuario():
+        return UserController.cadastrar_usuario()
     
-    @app.route('/listar_usuarios', methods=['GET'])
+    @app.route('/usuario/listar', methods=['GET'])
     def listar_usuarios():
-        return UserController.listar_usuarios()
+        return UserController.listar_usuarios()    
     
 
     
