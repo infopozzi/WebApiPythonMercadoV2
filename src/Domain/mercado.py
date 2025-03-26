@@ -1,3 +1,6 @@
+import random
+import hashlib
+
 class MercadoDomain:
     def __init__(self, nome, cnpj, email,celular, senha, status):
         self.nome = nome
@@ -16,3 +19,10 @@ class MercadoDomain:
             "senha": self.senha,
             "status": self.status
         }
+
+    #@staticmethod
+    def gerarCode(self):
+        return str(random.randint(1000, 9999))
+    
+    def gerarSenhaCriptografada(self):
+        return hashlib.sha256(self.senha.encode()).hexdigest()
