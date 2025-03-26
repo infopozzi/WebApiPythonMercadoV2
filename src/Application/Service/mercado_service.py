@@ -48,5 +48,14 @@ class MercadoService:
         db.session.delete(mercado)
         db.session.commit()
 
+    @staticmethod
+    def ativar(celular, code):
+        mercado = Mercado.query.filter(Mercado.celular == celular, Mercado.code == code).first()
+        if not mercado:
+            raise MercadoNaoEncontrado(f"Mercado com Celular: {celular} e Código: {code} não foi encontrado.")        
+        mercado.status = 1
+        db.session.commit()
+        return mercado
+
 class MercadoNaoEncontrado(Exception):
     pass

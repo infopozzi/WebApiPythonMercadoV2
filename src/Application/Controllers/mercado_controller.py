@@ -32,3 +32,19 @@ class MercadoController:
         except MercadoNaoEncontrado as e:
             return jsonify({ "message": str(e) }), 404
     
+    @staticmethod
+    def ativar_mercado():
+        try:
+            data = request.get_json()
+            celular = data.get('celular')
+            code = data.get('code')
+
+            mercado = MercadoService.ativar(celular, code)
+
+            return make_response(jsonify({
+                "mensagem": "Mercado ativado com sucesso",
+                "mercado": mercado.to_dict()
+            }), 200)
+    
+        except MercadoNaoEncontrado as e:
+            return jsonify({ "message": str(e) }), 404

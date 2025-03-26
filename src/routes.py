@@ -29,3 +29,6 @@ def init_routes(app):
     def listar_mercados():
         return MercadoController.listar_mercados()
     
+    @app.route('/mercado/ativar', methods=['POST'])
+    def ativar_mercado():
+        return MercadoController.ativar_mercado()
