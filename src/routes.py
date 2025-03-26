@@ -1,6 +1,5 @@
 from src.Application.Controllers.user_controller import UserController
 from src.Application.Controllers.mercado_controller import MercadoController
-
 from flask import jsonify, make_response
 
 def init_routes(app):    
@@ -22,11 +21,11 @@ def init_routes(app):
     
 
     
-    @app.route('/mercado', methods=['POST'])
-    def registrar_mercado():
-        return MercadoController.registrar_mercado()
+    @app.route('/mercado/cadastrar', methods=['POST'])
+    def cadastrar_mercado():
+        return MercadoController.cadastrar_mercado()
     
-    @app.route('/listar_mercados', methods=['GET'])
+    @app.route('/mercado/listar', methods=['GET'])
     def listar_mercados():
         return MercadoController.listar_mercados()
-
+    
