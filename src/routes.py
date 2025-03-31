@@ -36,3 +36,7 @@ def init_routes(app):
     @app.route('/mercado/login', methods=['POST'])
     def login_mercado():
         return MercadoController.login_mercado()
+    
+    @app.route('/mercado/validar_acesso_restrito', methods=['POST'])
+    def validar_acesso_restrito_mercado():
+        return MercadoController.validar_acesso_restrito_mercado()
