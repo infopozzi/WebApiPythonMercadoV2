@@ -5,8 +5,7 @@ class ProdutoController:
     @staticmethod
     def obter_produto():
         try:
-            data = request.get_json()
-            id = data.get('id')
+            id = request.args.get('id')
             produto = ProdutoService.obter(id)
             return jsonify(produto.to_dict(), 200)
         except ProdutoNaoEncontrado as e:
@@ -25,14 +24,13 @@ class ProdutoController:
             data = request.get_json()
             nome = data.get('nome')
             preco = data.get('preco')
-            quantidade = data.get('quantidade')
+            quantidade = data.get('estoque')
             imagem = data.get('imagem')
-            status = data.get('status')
 
-            if not nome or not preco or not quantidade or not status:
+            if not nome or not preco or not quantidade:
                 return make_response(jsonify({"erro": "Existem campos requeridos para preenchimento"}), 400)
 
-            produto = ProdutoService.salvar(nome, preco, quantidade, imagem, status)
+            produto = ProdutoService.salvar(nome, preco, quantidade, imagem, True)
 
             return make_response(jsonify({
                 "message": "Cadastro realiado com sucesso.",

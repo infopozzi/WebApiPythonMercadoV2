@@ -13,12 +13,11 @@ class MercadoController:
             email = data.get('email')
             celular = data.get('celular')
             senha = data.get('senha')
-            status = data.get('status')
 
             if not nome or not cnpj or not email or not celular or not senha:
                 return make_response(jsonify({"erro": "Existem campos requeridos para preenchimento"}), 400)
 
-            mercado = MercadoService.salvar(nome, cnpj, email, celular, senha, status)
+            mercado = MercadoService.salvar(nome, cnpj, email, celular, senha, 0)
 
             return make_response(jsonify({
                 "message": "Cadastro realiado com sucesso, sera enviado por whatsaap as instruções de ativação no telefone cadastrado.",

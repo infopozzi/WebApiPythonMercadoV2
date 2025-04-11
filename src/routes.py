@@ -49,7 +49,7 @@ def init_routes(app):
     def cadastrar_produto():
         return ProdutoController.cadastrar_produto()
     
-    @app.route('/produto/alterar', methods=['POST'])
+    @app.route('/produto/alterar', methods=['POST', 'PUT'])
     def alterar_produto():
         return ProdutoController.alterar_produto()
     
