@@ -3,6 +3,7 @@ from src.Application.Controllers.mercado_controller import MercadoController
 from src.Application.Controllers.produto_controller import ProdutoController
 
 from flask import jsonify, make_response
+from flask import send_from_directory
 
 def init_routes(app):    
     @app.route('/api', methods=['GET'])
@@ -64,3 +65,8 @@ def init_routes(app):
     @app.route('/produto/excluir', methods=['POST'])
     def excluir_produto():
         return ProdutoController.excluir_produto()
+
+
+    @app.route('/imagens/<nome_arquivo>')
+    def servir_imagem(nome_arquivo):
+        return send_from_directory('public/imagens', nome_arquivo)

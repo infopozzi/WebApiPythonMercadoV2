@@ -21,19 +21,24 @@ class ProdutoController:
     @staticmethod
     def cadastrar_produto():
         try:
-            data = request.get_json()
-            nome = data.get('nome')
-            preco = data.get('preco')
-            quantidade = data.get('estoque')
-            imagem = data.get('imagem')
+            nome = request.form.get('nome')
+            preco = float(request.form.get('preco'))
+            quantidade = int(request.form.get('quantidade'))
+            status = int(request.form.get('status'))
+            imagem = request.files.get('imagem') 
 
-            if not nome or not preco or not quantidade:
+            if not id or not nome or not preco or not quantidade or not status:
                 return make_response(jsonify({"erro": "Existem campos requeridos para preenchimento"}), 400)
 
-            produto = ProdutoService.salvar(nome, preco, quantidade, imagem, True)
+            nome_imagem = ''
+            if imagem:
+               imagem.save(f'./public/imagens/{imagem.filename}')
+               nome_imagem = 'http://127.0.0.1:5000//imagens/' + imagem.filename
+
+            produto = ProdutoService.salvar(nome, preco, quantidade, nome_imagem, status)
 
             return make_response(jsonify({
-                "message": "Cadastro realiado com sucesso.",
+                "message": "Produto cadastrado com sucesso.",
                 "mercado": produto.to_dict()
             }), 200)
         except ProdutoNaoEncontrado as e:
@@ -42,18 +47,23 @@ class ProdutoController:
     @staticmethod
     def alterar_produto():
         try:
-            data = request.get_json()
-            id = data.get('id')
-            nome = data.get('nome')
-            preco = data.get('preco')
-            quantidade = data.get('quantidade')
-            imagem = data.get('imagem')
-            status = data.get('status')
+            id = request.form.get('id')
+            nome = request.form.get('nome')
+            preco = float(request.form.get('preco'))
+            quantidade = int(request.form.get('quantidade'))
+            status = int(request.form.get('status'))
+            imagem = request.files.get('imagem') 
+            imagem_existente = request.form.get('imagem_existente') 
 
-            if not id or not nome or not preco or not quantidade or not status:
+            if not id or not nome or not preco or not quantidade:
                 return make_response(jsonify({"erro": "Existem campos requeridos para preenchimento"}), 400)
+            
+            nome_imagem = imagem_existente
+            if imagem:
+               imagem.save(f'./public/imagens/{imagem.filename}')
+               nome_imagem = 'http://127.0.0.1:5000//imagens/' + imagem.filename
 
-            produto = ProdutoService.alterar(id, nome, preco, quantidade, imagem, status)
+            produto = ProdutoService.alterar(id, nome, preco, quantidade, nome_imagem, status)
 
             return make_response(jsonify({
                 "message": "Produto alterado com sucesso.",
