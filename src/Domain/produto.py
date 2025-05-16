@@ -1,6 +1,7 @@
 
 class ProdutoDomain:
-    def __init__(self, nome, preco, quantidade, imagem, status):
+    def __init__(self, id_mercado, nome, preco, quantidade, imagem, status):
+        self.id_mercado = id_mercado
         self.nome = nome
         self.preco = preco
         self.quantidade = quantidade

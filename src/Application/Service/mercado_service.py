@@ -12,8 +12,8 @@ class MercadoService:
         return mercado
 
     @staticmethod
-    def listar():
-        return Mercado.query.all()
+    def listar(id_mercado):
+        return Mercado.query.filter(Mercado.id_mercado == id_mercado)
 
     @staticmethod
     def salvar(nome, cnpj, email, celular, senha, status):

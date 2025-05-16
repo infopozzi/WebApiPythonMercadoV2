@@ -1,6 +1,7 @@
 from src.Application.Controllers.user_controller import UserController
 from src.Application.Controllers.mercado_controller import MercadoController
 from src.Application.Controllers.produto_controller import ProdutoController
+from src.Application.Controllers.pedido_controller import PedidoController
 
 from flask import jsonify, make_response
 from flask import send_from_directory
@@ -70,3 +71,8 @@ def init_routes(app):
     @app.route('/imagens/<nome_arquivo>')
     def servir_imagem(nome_arquivo):
         return send_from_directory('public/imagens', nome_arquivo)
+
+
+    @app.route('/pedido/cadastrar', methods=['POST'])
+    def cadastrar_pedido():
+        return PedidoController.cadastrar_pedido()

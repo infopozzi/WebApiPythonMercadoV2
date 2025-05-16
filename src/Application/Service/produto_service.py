@@ -11,13 +11,13 @@ class ProdutoService:
         return produto
 
     @staticmethod
-    def listar():
-        return Produto.query.all()
+    def listar(id_mercado):
+        return Produto.query.filter_by(id_mercado=id_mercado).all()
 
     @staticmethod
-    def salvar(nome, preco, quantidade, imagem, status):
-        new_produto = ProdutoDomain(nome, preco, quantidade, imagem, status)
-        produto = Produto(nome=new_produto.nome, preco=new_produto.preco, quantidade=new_produto.quantidade, imagem = new_produto.imagem, status = new_produto.status )        
+    def salvar(id_mercado, nome, preco, quantidade, imagem, status):
+        new_produto = ProdutoDomain(id_mercado, nome, preco, quantidade, imagem, status)
+        produto = Produto(id_mercado = new_produto.id_mercado, nome=new_produto.nome, preco=new_produto.preco, quantidade=new_produto.quantidade, imagem = new_produto.imagem, status = new_produto.status )        
         db.session.add(produto)
         db.session.commit()
         return produto
@@ -35,6 +35,17 @@ class ProdutoService:
         produto.quantidade = quantidade
         produto.imagem = imagem
         produto.status = status
+
+        db.session.commit()
+        return produto
+    
+    @staticmethod
+    def baixar_estoque(id, quantidade):
+        produto = Produto.query.get(id)
+        if not produto:
+            raise ProdutoNaoEncontrado(f"Produto com ID {id} não foi encontrado.")
+        
+        produto.quantidade = produto.quantidade - quantidade
 
         db.session.commit()
         return produto
