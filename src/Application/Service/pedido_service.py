@@ -5,13 +5,17 @@ from src.Domain.detalhesPedido import DetalhesPedidoDomain
 from src.Infrastructure.Model.detalhesPedido import DetalhesPedido
 
 from src.config.data_base import db 
+from datetime import datetime
+
+from sqlalchemy import func
 
 class PedidoService:
 
     @staticmethod
     def salvar(id_mercado):
         new_pedido = PedidoDomain(id_mercado)
-        pedido = Pedido(id_mercado = new_pedido.id_mercado)        
+        pedido = Pedido(id_mercado = new_pedido.id_mercado) 
+        pedido.dt_pedido = datetime.now()
         db.session.add(pedido)
         db.session.commit()
         return pedido
@@ -31,7 +35,26 @@ class PedidoService:
 
         db.session.commit()
         return detalhes_    
-
     
+    @staticmethod
+    def listar(id_mercado, data_inicio_str=None, data_termino_str=None):
+        query = Pedido.query.filter_by(id_mercado=id_mercado)
+
+        if data_inicio_str and data_termino_str:
+            try:
+                data_inicio = datetime.strptime(data_inicio_str, "%d/%m/%Y")
+                data_termino = datetime.strptime(data_termino_str, "%d/%m/%Y")
+
+                # filtro por intervalo de datas
+                query = query.filter(
+                    Pedido.dt_pedido >= data_inicio,
+                    Pedido.dt_pedido <= data_termino
+                )
+            except ValueError:
+                # você pode tratar erro de data inválida aqui se quiser
+                pass
+
+        return query.all()
+        
 class PedidoNaoEncontrado(Exception):
     pass

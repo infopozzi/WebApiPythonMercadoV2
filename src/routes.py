@@ -76,3 +76,7 @@ def init_routes(app):
     @app.route('/pedido/cadastrar', methods=['POST'])
     def cadastrar_pedido():
         return PedidoController.cadastrar_pedido()
+    
+    @app.route('/pedido/listar', methods=['POST'])
+    def listar_pedido():
+        return PedidoController.listar_pedidos()
